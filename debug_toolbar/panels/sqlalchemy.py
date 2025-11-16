@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 
 from debug_toolbar.dependencies import get_dependencies
 from debug_toolbar.panels.sql import SQLPanel
+from debug_toolbar.stack_trace import get_stack_trace
 
 
 class SQLAlchemyPanel(SQLPanel):
@@ -33,13 +34,16 @@ class SQLAlchemyPanel(SQLPanel):
         context._start_time = perf_counter()  # type: ignore[attr-defined]
 
     def after_execute(self, context: ExecutionContext, **kwargs: t.Any) -> None:
+        duration = (
+            perf_counter() - context._start_time  # type: ignore[attr-defined]
+        ) * 1000
+        stack_trace = get_stack_trace()
+
         query = {
-            "duration": (
-                perf_counter() - context._start_time  # type: ignore[attr-defined]
-            )
-            * 1000,
+            "duration": duration,
             "sql": context.statement,
             "params": context.parameters,
+            "stack_trace": stack_trace,
         }
         self.add_query(str(context.engine.url), query)
 

@@ -626,6 +626,20 @@ iframe#profilingContent {
   display: inline;
   font-size: 11px;
 }
+#fastDebug .fastSQLTraceBackDiv {
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+#fastDebug .fastSQLTraceBackInnerDiv {
+  padding: 5px;
+}
+#fastDebug .fastSQLTraceBackInnerDiv p:first-child {
+  color: gray;
+}
+#fastDebug .fastSQLTraceBackInnerDiv code {
+  margin-left: 20px;
+}
 
 #HeadersPanel table {
   table-layout: fixed;

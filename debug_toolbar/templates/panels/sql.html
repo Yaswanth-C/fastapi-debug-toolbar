@@ -70,6 +70,17 @@
             <div class="fastSQLDetailsDiv">
               {% if query.params %}<p><strong>Params:</strong> <code>{{ query.params }}</code></p>{% endif %}
               <p><strong>Connection:</strong> {{ alias }}</p>
+              {% if query.stack_trace %}
+                <div class="fastSQLTraceBackDiv">
+                  <strong>Stack trace:</strong>
+                  {% for frame in query.stack_trace %}
+                    <div class="fastSQLTraceBackInnerDiv">
+                      <p>{{ frame.file }} in <strong>{{ frame.func }}</strong> Line: <strong>{{ frame.lineno }}</strong></p>
+                      <p><code>{{ frame.code }}</code></p>
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
             </div>
           </td>
         </tr>
